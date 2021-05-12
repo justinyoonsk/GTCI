@@ -1,4 +1,52 @@
 '''
+#Longest subarray with Ones after Replacement (hard)
+Array = [0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1]
+k = 3
+maxOnesCount = 0
+window_start = 0
+max_length = 0
+for window_end in range(len(Array)):
+    if (Array[window_end]) == 1:
+        maxOnesCount += 1
+    elif (Array[window_end]) == 0:
+        while window_end - window_start + 1 - maxOnesCount > k:
+            if Array[window_start] == 1:
+                maxOnesCount -= 1
+            window_start += 1
+
+    max_length = max(max_length, window_end - window_start + 1)
+
+print(max_length)
+'''
+
+'''
+#Long substring with same letters after replacement 
+str = "aabccbb"
+k = 2
+dict1 = {}
+window_start = 0
+max_length = 0
+max_count = 0
+
+for window_end in range(len(str)):
+    right_char = str[window_end]
+    if right_char not in dict1:
+        dict1[right_char] = 0
+    dict1[right_char] += 1
+
+    max_count = max(max_count, dict1[right_char])
+    if (window_end - window_start + 1 - max_count) > k:
+        left_char = str[window_start]
+        dict1[left_char] -= 1
+        window_start += 1
+
+    max_length = max(max_length, window_end - window_start + 1)
+
+print(max_length)
+'''
+
+
+'''
 #No-repeat Substring
 str = "abbbb"
 window_start = 0
