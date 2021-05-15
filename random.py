@@ -43,7 +43,6 @@ for window_end in range(len(str)):
     max_length = max(max_length, window_end - window_start + 1)
 
 print(max_length)
-
 '''
 
 
