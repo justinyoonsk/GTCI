@@ -1,4 +1,436 @@
 '''
+
+from collections import deque
+arr = [2, 5, 3, 10]
+target = 30
+product = 1
+left = 0
+answer = []
+for right in range(len(arr)):
+    product *= arr[right]
+    while product >= target:
+        product /= arr[left]
+        left += 1
+    temp_list = deque()
+    for i in range(right, left-1, -1):
+        temp_list.appendleft(arr[i])
+        answer.append(list(temp_list))
+print(answer)
+
+'''
+
+'''
+arr = [-1, 1, 2, 3, 4]
+target = 5
+arr = sorted(arr)
+#[-1, 1, 2, 3, 4]
+counter = 0
+for i in range(len(arr) - 2):
+    left = i + 1
+    right = len(arr) - 1
+    target_sum = target - arr[i]
+    while left < right:
+        if arr[left] + arr[right] < target_sum:
+            print(arr[i], arr[left], arr[right])
+            counter += right - left
+            left += 1
+        else:
+            right -= 1
+print(counter)
+'''
+'''
+arr = [-2, 0, 1, 2, 3, 5]
+target_sum = 2
+smallest_diff = float("inf")
+answer = 0
+arr = sorted(arr)
+for i in range(len(arr)-2):
+    left = i + 1
+    right = len(arr) - 1
+    while left < right:
+        target_diff = target_sum - arr[i] - arr[left] - arr[right]
+        if target_diff == 0:
+            print("done, answer:", target_sum - target_diff)
+        if abs(target_diff) < abs(smallest_diff):
+            smallest_diff = target_diff
+        if target_diff > 0:
+            left += 1
+        else:
+            right -= 1
+
+print(target_sum - smallest_diff)
+'''
+'''
+arr = [-3, 0, 1, 2, -1, 1, -2]
+arr = sorted(arr) #[-3, -2, -1, 0, 1, 1, 2]
+ans = []
+for i in range(len(arr)):
+    target_sum = -arr[i]
+    left = i + 1
+    right = len(arr) - 1
+
+    while left < right:
+        if arr[left] == arr[left-1]:
+            break
+        if arr[left] + arr[right] < target_sum:
+            left += 1
+        if arr[left] + arr[right] > target_sum:
+            right -= 1
+        if arr[left] + arr[right] == target_sum:
+            ans.append([-target_sum, arr[left], arr[right]])
+            left += 1
+print(ans)
+'''
+'''
+arr = [-3, -1, 0, 1, 2]
+arr_copy = [0 for x in range(len(arr))]
+highestIndex = len(arr) - 1
+left = 0
+right = len(arr) - 1
+while left <= right:
+    squaresLeft = arr[left] * arr[left]
+    squaresRight = arr[right] * arr[right]
+    if squaresRight > squaresLeft:
+        arr_copy[highestIndex] = squaresRight
+        highestIndex -= 1
+        right -= 1
+    else:
+        arr_copy[highestIndex] = squaresLeft
+        highestIndex -= 1
+        left += 1
+print(arr_copy)
+'''
+'''
+arr = [3, 2, 3, 6, 3, 10, 9, 3]
+key = 3
+#output = 4 [2, 6, 10, 9]
+nextElement = 0
+for i in range(len(arr)):
+    if arr[i] != key:
+        arr[nextElement] = arr[i]
+        nextElement += 1
+print(nextElement)
+'''
+'''
+arr = [2, 3, 3, 3, 6, 9, 9]
+next_non_duplicate = 1
+i = 1
+while(i < len(arr)):
+    if arr[next_non_duplicate - 1] != arr[i]:
+        arr[next_non_duplicate] = arr[i]
+        next_non_duplicate += 1
+        print(next_non_duplicate)
+    i += 1
+
+print(next_non_duplicate)
+'''
+'''
+arr = [2, 3, 3, 3, 6, 9, 9]
+#arr = [2, 3, 3, 3, 6, 9]
+left = 0
+right = len(arr) - 1
+while(left <= right):
+    if arr[left] == arr[left + 1]:
+        del arr[left]
+        right -= 1
+    left += 1
+    if arr[right] == arr[right - 1]:
+        del arr[right]
+        right -= 1
+    right -= 1
+print(len(arr))
+'''
+'''
+arr = [1, 2, 3, 4, 6]
+target_sum = 6
+left = 0
+right = len(arr) - 1
+while(left < right):
+    current_sum = arr[left] + arr[right]
+    if current_sum == target_sum:
+        print([left, right])
+    if target_sum > current_sum:
+        left += 1
+    else:
+        right -= 1
+'''
+'''
+#Two Pointers mine
+arr = [2, 5, 9, 11]
+target_sum = 11
+left = 0
+right = len(arr) - 1
+
+for i in range(len(arr)):
+    if arr[left] + arr[right] > target_sum:
+        right -= 1
+    if arr[left] + arr[right] < target_sum:
+        left += 1
+    if arr[left] + arr[right] == target_sum:
+        print([left, right])
+    else:
+        print([])
+'''
+'''
+str1 = "catcatfoxfox"
+words = ["cat", "fox"]
+
+if len(words) == 0 or len(words[0]) == 0:
+    print([])
+
+word_frequency = {}
+
+for word in words:
+    if word not in word_frequency:
+        word_frequency[word] = 0
+    word_frequency[word] += 1
+
+result_indices = []
+words_count = len(words)
+word_length = len(words[0])
+
+for i in range((len(str1) - words_count * word_length) + 1):
+    words_seen = {}
+    for j in range(0, words_count):
+        next_word_index = i + j * word_length
+        word = str1[next_word_index: next_word_index + word_length]
+        if word not in word_frequency:
+            break
+        if word not in words_seen:
+            words_seen[word] = 0
+        words_seen[word] += 1
+
+        if words_seen[word] > word_frequency.get(word, 0):
+            break
+
+        if j + 1 == words_count:
+            result_indices.append(i)
+print(result_indices)
+'''
+'''
+str1 = "catcatfoxfox"
+words = ["cat", "fox"]
+
+word_frequency = {}
+matched_word = 0
+result_indices = []
+window_start = 0
+
+for i in words:
+    if i not in word_frequency:
+        word_frequency[i] = 0
+    word_frequency[i] += 1
+
+for window_end in range(0, len(str), len(words[0])):
+    str_word = str1[window_end:window_end + len(words[0])]
+    if str_word in word_frequency:
+        word_frequency[str_word] -= 1
+    if word_frequency[str_word] == 0:
+        matched_word += 1
+    if matched_word == len(words):
+        left_char =
+        result_indices.append(window_end-len(words[0]))
+    print(word_frequency)
+print(result_indices)
+'''
+
+'''
+#Sliding Window Problem Challenge 3
+str = "abdbca"
+pattern = "abc"
+dict1 = {}
+window_start = 0
+matched = 0
+min_length = len(str) + 1
+
+for i in range(len(pattern)):
+    if pattern[i] not in dict1:
+        dict1[pattern[i]] = 0
+    dict1[pattern[i]] += 1
+
+for window_end in range(len(str)):
+    right_char = str[window_end]
+    if right_char in dict1:
+        dict1[right_char] -= 1
+        if dict1[right_char] == 0:
+            matched += 1
+
+    while matched == len(pattern):
+
+        if min_length > window_end - window_start + 1:
+            min_length = window_end - window_start + 1
+            window_start_tracker = window_start
+
+        left_char = str[window_start]
+        if left_char in dict1:
+            if dict1[left_char] == 0:
+                matched -= 1
+
+            dict1[left_char] += 1
+        window_start += 1
+
+if min_length > len(str):
+    print("")
+print(str[window_start_tracker:window_start_tracker+min_length])
+'''
+'''
+#Sliding window Problem Challenge 2
+str = "abbcabc"
+pattern = "abc"
+dict1 = {}
+window_start = 0
+matched_letter = 0
+arr = []
+
+for i in range(len(pattern)):
+    if pattern[i] not in dict1:
+        dict1[pattern[i]] = 0
+    dict1[pattern[i]] += 1
+
+for window_end in range(len(str)):
+    right_char = str[window_end]
+    if right_char in dict1:
+        dict1[right_char] -= 1
+        if dict1[right_char] == 0:
+            matched_letter += 1
+    if window_end - window_start + 1 > len(pattern):
+        left_char = str[window_start]
+        if left_char in dict1:
+            if dict1[left_char] == 0:
+                matched_letter -= 1
+            dict1[left_char] += 1
+        window_start += 1
+
+    if matched_letter == len(dict1):
+        for i in range(window_start, window_end + 1):
+            arr.append(i)
+        print(arr)
+print("yo")
+'''
+'''
+#Sliding Window Problem Challenge 1
+str = "aaacb"
+pattern = "abc"
+dict1 = {}
+window_start = 0
+matched_letter = 0
+for i in range(len(pattern)):
+    if pattern[i] not in dict1:
+        dict1[pattern[i]] = 0
+    dict1[pattern[i]] += 1
+
+for window_end in range(len(str)):
+    right_char = str[window_end]
+    if right_char in dict1:
+        dict1[right_char] -= 1
+        if dict1[right_char] == 0:
+            matched_letter += 1
+
+    if window_end - window_start + 1 > len(pattern):
+        left_char = str[window_start]
+        if left_char in dict1:
+            if dict1[left_char] == 0:
+                matched_letter -= 1
+            dict1[left_char] += 1
+        window_start += 1
+    if matched_letter == len(dict1):
+        print(True)
+
+print(False)
+'''
+
+'''
+str = "aaaacb"
+pattern = "abc"
+dict1 = {}
+counter = 0
+maximum_count = 0
+window_end = len(pattern)
+window_start = 0
+
+for i in range(len(pattern)):
+    if pattern[i] not in dict1:
+        dict1[pattern[i]] = 0
+    dict1[pattern[i]] += 1
+
+for i in range(window_start, window_end):
+    if str[i] in dict1:
+        dict1[str[i]] -= 1
+    if dict1[str[i]] < 0:
+        
+'''
+
+
+
+'''
+#Longest subarray with Ones after Replacement (hard)
+Array = [0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1]
+k = 3
+maxOnesCount = 0
+window_start = 0
+max_length = 0
+for window_end in range(len(Array)):
+    if (Array[window_end]) == 1:
+        maxOnesCount += 1
+    elif (Array[window_end]) == 0:
+        while window_end - window_start + 1 - maxOnesCount > k:
+            if Array[window_start] == 1:
+                maxOnesCount -= 1
+            window_start += 1
+
+    max_length = max(max_length, window_end - window_start + 1)
+
+print(max_length)
+'''
+
+'''
+#Long substring with same letters after replacement 
+str = "aabccbb"
+k = 2
+dict1 = {}
+window_start = 0
+max_length = 0
+max_count = 0
+
+for window_end in range(len(str)):
+    right_char = str[window_end]
+    if right_char not in dict1:
+        dict1[right_char] = 0
+    dict1[right_char] += 1
+
+    max_count = max(max_count, dict1[right_char])
+    if (window_end - window_start + 1 - max_count) > k:
+        left_char = str[window_start]
+        dict1[left_char] -= 1
+        window_start += 1
+
+    max_length = max(max_length, window_end - window_start + 1)
+
+print(max_length)
+'''
+
+'''
+#No-repeat Substring
+str = "abbbb"
+window_start = 0
+char_index_map = {}
+maximum = float('-inf')
+max_length = 0
+
+for window_end in range(len(str)):
+    right_char = str[window_end]
+    if right_char not in char_index_map:
+        char_index_map[right_char] = 0
+    char_index_map[right_char] += 1
+
+    if 2 in char_index_map.values():
+        maximum = max(maximum, window_end - window_start)
+        window_start = window_end
+        char_index_map.clear()
+print(maximum)
+'''
+
+'''
 #Longest subarray with Ones after Replacement (hard)
 Array = [0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1]
 k = 3
