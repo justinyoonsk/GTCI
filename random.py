@@ -16,7 +16,7 @@ for right in range(len(arr)):
         temp_list.appendleft(arr[i])
         answer.append(list(temp_list))
 print(answer)
-
+//
 '''
 
 '''
