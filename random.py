@@ -1,3 +1,97 @@
+#arr = [4, 1, 2, -1, 1, -3], 1
+#[-3, -1, 1, 1, 2, 4] target = 1
+
+def search_quadruplets(arr, target):
+    arr = sorted(arr)
+    quadruplets = []
+    for i in range(0, len(arr) - 3):
+        if i > 0 and arr[i] == arr[i-1]:
+            continue
+        for j in range(i+1, len(arr) - 2):
+            if j > i + 1 and arr[j] == arr[j - 1]:
+                continue
+            print("EYE", i)
+            print("JAY", j)
+            search_pair(arr, target, i, j, quadruplets)
+    return quadruplets
+
+def search_pair(arr, target_sum, first, second, quadruplets):
+    left = second + 1
+    right = len(arr) - 1
+    while (left < right):
+        quad_sum = arr[first] + arr[second] + arr[left] + arr[right]
+        if quad_sum == target_sum:
+            quadruplets.append([arr[first], arr[second], arr[left], arr[right]])
+            left += 1
+            right -= 1
+            while (left < right and arr[left] == arr[left-1]):
+                left += 1
+            while (left < right and arr[right] == arr[right+1]):
+                right -= 1
+        elif quad_sum < target_sum:
+            left += 1
+        else:
+            right -= 1
+
+
+def main():
+    print(search_quadruplets([4, 1, 2, -1, 1, -3], 1))
+
+main()
+
+'''
+def search_triplets(arr):
+  arr.sort()
+  triplets = []
+  for i in range(len(arr)):
+    if i > 0 and arr[i] == arr[i-1]:  # skip same element to avoid duplicate triplets
+      continue
+    search_pair(arr, -arr[i], i+1, triplets)
+
+  return triplets
+
+
+def search_pair(arr, target_sum, left, triplets):
+  right = len(arr) - 1
+  while(left < right):
+    current_sum = arr[left] + arr[right]
+    if current_sum == target_sum:  # found the triplet
+      triplets.append([-target_sum, arr[left], arr[right]])
+      left += 1
+      right -= 1
+      while left < right and arr[left] == arr[left - 1]:
+        left += 1  # skip same element to avoid duplicate triplets
+      while left < right and arr[right] == arr[right + 1]:
+        right -= 1  # skip same element to avoid duplicate triplets
+    elif target_sum > current_sum:
+      left += 1  # we need a pair with a bigger sum
+    else:
+      right -= 1  # we need a pair with a smaller sum
+
+
+def main():
+  print(search_triplets([-3, 0, 1, 2, -1, 1, -2]))
+  print(search_triplets([-5, 2, -1, -2, 3]))
+'''
+'''
+arr = [2, 2, 0, 1, 2, 0]
+#output = [0, 0, 1, 1, 2]
+low, high = 0, len(arr) - 1
+i = 0
+while (i <= high):
+    if arr[i] == 0:
+        arr[i], arr[low] = arr[low], arr[i]
+        #arr[1], arr[0] = arr[0], arr[1]
+        i += 1
+        low += 1
+    elif arr[i] == 1:
+        i += 1
+    elif arr[i] == 2:
+        arr[i], arr[high] = arr[high], arr[i]
+        high -= 1
+    print(arr)
+'''
+
 '''
 
 from collections import deque
