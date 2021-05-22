@@ -34,6 +34,7 @@ def search_pair(arr, target_sum, first, second, quadruplets):
             right -= 1
 
 
+
 def main():
     print(search_quadruplets([4, 1, 2, -1, 1, -3], 1))
 
