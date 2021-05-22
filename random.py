@@ -15,6 +15,7 @@ def search_quadruplets(arr, target):
             search_pair(arr, target, i, j, quadruplets)
     return quadruplets
 
+
 def search_pair(arr, target_sum, first, second, quadruplets):
     left = second + 1
     right = len(arr) - 1
