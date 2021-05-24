@@ -1,3 +1,33 @@
+'''
+def shortest_window_sort(arr):
+    low = 0
+    high = len(arr)-1
+    for i in range(len(arr)-1):
+        if arr[i] > arr[i+1]:
+            start = i
+            break
+    for j in range(len(arr)-1,0,-1):
+        if arr[j] < arr[j-1]:
+            finish = j
+            break
+    subarray_min = float("inf")
+    subarray_max = float("-inf")
+
+    for k in range(start, finish):
+        subarray_min = min(subarray_min, arr[k])
+        subarray_max = max(subarray_max, arr[k])
+
+
+    while start > 0 and arr[start-1] > subarray_min:
+        start -= 1
+    while finish < len(arr) - 1 and arr[finish+1] < subarray_max:
+        high += 1
+
+    return finish - start + 1
+'''
+
+
+'''
 #arr = [4, 1, 2, -1, 1, -3], 1
 #[-3, -1, 1, 1, 2, 4] target = 1
 
@@ -37,7 +67,7 @@ def main():
     print(search_quadruplets([4, 1, 2, -1, 1, -3], 1))
 
 main()
-
+'''
 '''
 def search_triplets(arr):
   arr.sort()
