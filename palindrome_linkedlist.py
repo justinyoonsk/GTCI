@@ -3,7 +3,7 @@ class Node:
         self.value = value
         self.next = next
 
-#Palindrome linked list
+
 def is_palindromic_linked_list(head):
     fast = head
     slow = head
