@@ -1,3 +1,95 @@
+from __future__ import print_function
+from heapq import *
+
+
+class Interval:
+    def __init__(self, start, end):
+        self.start = start
+        self.end = end
+
+    def print_interval(self):
+        print("[" + str(self.start) + ", " + str(self.end) + "]", end='')
+
+
+class EmployeeInterval:
+    def __init__(self, interval, employeeIndex, intervalIndex):
+        self.interval = interval
+        self.employeeIndex = employeeIndex
+        self.intervalIndex = intervalIndex
+
+    def __lt__(self, other):
+        return self.interval.start < other.interval.start
+
+
+def find_employee_free_time(schedule):
+    if schedule is None:
+        return []
+
+    n = len(schedule)
+    result, minHeap = [], []
+    for i in range(n):
+        heappush(minHeap, EmployeeInterval(schedule[i][0], i, 0))
+
+    previousInterval = minHeap[0].interval
+    while minHeap:
+        queueTop = heappop(minHeap)
+        if previousInterval.end < queueTop.interval.start:
+            result.append(Interval(previousInterval.end, queueTop.interval.start))
+            previousInterval = queueTop.interval
+        else:
+            if previousInterval.end < queueTop.interval.end:
+                previousInterval = queueTop.interval
+        employeeSchedule = schedule[queueTop.employeeIndex]
+        if len(employeeSchedule) > queueTop.intervalIndex + 1:
+            heappush(minHeap, EmployeeInterval(employeeSchedule[queueTop.intervalIndex + 1], queueTop.employeeIndex,
+                                               queueTop.intervalIndex + 1))
+
+    return result
+
+
+def main():
+
+    input = [[Interval(1, 3), Interval(5, 6)], [
+        Interval(2, 3), Interval(6, 8)]]
+    print("Free intervals: ", end='')
+    for interval in find_employee_free_time(input):
+        interval.print_interval()
+    print()
+
+    input = [[Interval(1, 3), Interval(9, 12)], [
+        Interval(2, 4)], [Interval(6, 8)]]
+    print("Free intervals: ", end='')
+    for interval in find_employee_free_time(input):
+        interval.print_interval()
+    print()
+
+    input = [[Interval(1, 3)], [
+        Interval(2, 4)], [Interval(3, 5), Interval(7, 9)]]
+    print("Free intervals: ", end='')
+    for interval in find_employee_free_time(input):
+        interval.print_interval()
+    print()
+
+
+main()
+'''
+#Given a list of intervals, find the point where the max number of intervals overlap
+
+import heapq
+intervals = [[0,15],[0,30],[5,10],[15,20],[21,25]]
+intervals.sort()
+print(intervals)
+heap = [intervals[0][1]]
+meeting_rooms = 1
+
+for start, end in intervals[1:]:
+    if heap[0] <= start:
+        heapq.heappop(heap)
+    heapq.heappush(heap, end)
+    meeting_rooms = max(meeting_rooms, len(heap))
+print([start,end])
+'''
+
 '''
 def shortest_window_sort(arr):
     low = 0
