@@ -2,7 +2,7 @@ class Node:
     def __init__(self, value, next=None):
         self.value = value
         self.next = next
-
+#
 
 def is_palindromic_linked_list(head):
     fast = head
