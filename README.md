@@ -1,4 +1,4 @@
-GTCI = Grokking The Coding Interview
+Grokking The Coding Interview
 
 Algorithm prep course that I have worked on for months. 
 
