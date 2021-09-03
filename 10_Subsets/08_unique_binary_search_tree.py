@@ -34,6 +34,5 @@ def main():
 
 main()
 
-#time complexity O(N*2^N)
-#space complexity O(2^N)
-
+# O(N*2^N) time
+# O(2^N) space
