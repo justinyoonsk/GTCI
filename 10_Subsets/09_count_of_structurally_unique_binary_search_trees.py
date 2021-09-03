@@ -23,4 +23,4 @@ def main():
 main()
 
 # O(N * 2^N) time
-# O(2^N) space
+# O(2^N) space 
